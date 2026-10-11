@@ -25,7 +25,7 @@
 }
 :root[data-theme="light"]{ --bg:#e8f2ea; --bg2:#d9eadd; --panel:#ffffff; --panel2:#eef6f0; --line:#9cc3ad; --chalk:#10261d; --mut:#4c6e5e; }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;margin:0}
+html,body{height:100%;margin:0;overscroll-behavior:none;overscroll-behavior-y:none;touch-action:manipulation}
 body{background:var(--bg);color:var(--chalk);font-family:var(--body);font-size:15px;line-height:1.35;overflow:hidden;overscroll-behavior:none}
 h1,h2,h3{font-family:var(--disp);margin:0;font-weight:800;letter-spacing:.01em}
 button{font:inherit;color:inherit;cursor:pointer}
@@ -1511,6 +1511,7 @@ document.addEventListener('input',e=>{
   else if(id==='mkq'){sub.mkQ=e.target.value;renderMkList()}
   else if(id==='mkl'){sub.mkLg=e.target.value;renderMkList()}
 });
+document.addEventListener('touchmove',e=>{if(M&&!$('#match').hidden)e.preventDefault()},{passive:false});
 render();
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>

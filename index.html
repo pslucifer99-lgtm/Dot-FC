@@ -944,7 +944,7 @@ function humanTackle(p){
   if(p.cd>0||p.slide>0||p.stun>0)return;
   const car=M.ball.owner;
   let ang=p.face;
-  if(car&&car.team===1&&D(p,car)<150)ang=Math.atan2(car.y-p.y,car.x-p.x);
+  if(car&&car.team===1&&D(p,car)<190)ang=Math.atan2(car.y-p.y,car.x-p.x);
   else if(!car){const b=M.ball;if(D(p,b)<120)ang=Math.atan2(b.y-p.y,b.x-p.x)}
   p.slide=.3;p.sdx=Math.cos(ang);p.sdy=Math.sin(ang);p.cd=1;p.face=ang;
   p.vx=p.sdx*360;p.vy=p.sdy*360;
@@ -996,9 +996,9 @@ function humanUpdate(p,dt){
   if(p.sta<=0)p.tired=true;if(p.tired&&p.sta>=28)p.tired=false;
   let sp=150*(.82+.5*nf(G.stats.pace));
   if(sprint)sp*=1.35;if(p.boost>0)sp*=1.35;if(M.fireT>0)sp*=1.25;if(M.ball.owner===p)sp*=.95;if(M.min>80)sp*=1.06;
-  if(p.slide>0){p.slide-=dt;p.vx=p.sdx*360*(p.slide/.3+.3);p.vy=p.sdy*360*(p.slide/.3+.3);
+  if(p.slide>0){p.slide-=dt;p.vx=p.sdx*430*(p.slide/.3+.3);p.vy=p.sdy*430*(p.slide/.3+.3);
     const car=M.ball.owner;
-    if(car&&car.team===1&&D(p,car)<p.r+car.r+16&&p.cd<=.92){if(tryTackle(p,car,1)){}p.slide=0}
+    if(car&&car.team===1&&D(p,car)<p.r+car.r+26&&p.cd<=.98){if(tryTackle(p,car,1.7))toast('SLIDE TACKLE!','#6fd3ff');p.slide=0}
     if(p.slide<=0&&M.ball.owner!==p)p.stun=Math.max(p.stun,.3);
     return;
   }
@@ -1009,7 +1009,7 @@ function humanUpdate(p,dt){
   if(act.fire){act.fire=false;if(M.fire>=100&&M.fireT<=0){M.fireT=9;M.fire=0;banner('ON FIRE!','9 seconds of pure class');burst(p.x,p.y,'#ff6a57',30,260)}}
   // CM/ST wrestle for the ball on contact
   const car=M.ball.owner;
-  if(G.role!=='CB'&&car&&car.team===1&&p.cd<=0&&p.stun<=0&&D(p,car)<p.r+car.r+6)tryTackle(p,car,.55);
+  if(car&&car.team===1&&p.cd<=0&&p.stun<=0&&D(p,car)<p.r+car.r+8){if(sprint){if(tryTackle(p,car,.85))toast('SHOULDER CHARGE!','#6fd3ff')}else tryTackle(p,car,.5)}
 }
 
 /* ----- physics helpers ----- */
